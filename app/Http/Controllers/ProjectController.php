@@ -49,12 +49,16 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        // Ensure the user is authorized to create projects
-        if (!Auth::user()->can('create-projects')) {
-            abort(403, 'Unauthorized action.');
-        }
+        // // Ensure the user is authorized to create projects
+        // if (!Auth::user()->can('create-projects')) {
+        //     abort(403, 'Unauthorized action.');
+        // }
 
-        return inertia("Project/Create");
+        return inertia("Project/Create", [
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
+        ]);
     }
 
     /**
@@ -112,11 +116,15 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         // Ensure the user is authorized to edit this project
-        if (!Auth::user()->can('edit-project', $project)) {
-            abort(403, 'Unauthorized action.');
-        }
+        // if (!Auth::user()->can('edit-project', $project)) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+
         return inertia('Project/Edit', [
             'project' => new ProjectResource($project),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 

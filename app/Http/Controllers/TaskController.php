@@ -58,6 +58,9 @@ class TaskController extends Controller
         return inertia("Task/Create", [
             'projects' => ProjectResource::collection($projects),
             'users' => UserResource::collection($users),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
