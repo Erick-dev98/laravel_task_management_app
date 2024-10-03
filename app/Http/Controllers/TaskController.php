@@ -41,6 +41,9 @@ class TaskController extends Controller
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
@@ -85,6 +88,9 @@ class TaskController extends Controller
     {
         return inertia('Task/Show', [
             'task' => new TaskResource($task),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
@@ -100,6 +106,9 @@ class TaskController extends Controller
             'task' => new TaskResource($task),
             'projects' => ProjectResource::collection($projects),
             'users' => UserResource::collection($users),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
@@ -161,6 +170,9 @@ class TaskController extends Controller
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 }

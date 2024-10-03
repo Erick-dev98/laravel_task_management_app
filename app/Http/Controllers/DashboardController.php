@@ -52,16 +52,29 @@ class DashboardController extends Controller
             ->get();
         $activeTasks = TaskResource::collection($activeTasks);
 
-        return inertia('Dashboard', compact(
-            'totalPendingTasks',
-            'myPendingTasks',
-            'totalProgressTasks',
-            'myProgressTasks',
-            'totalCompletedTasks',
-            'myCompletedTasks',
-            'totalHighPriorityTasks',
-            'myHighPriorityTasks',
-            'activeTasks',
-        ));
+        return inertia('Dashboard', [
+            'auth' => ['user' => $user], // Ensure auth object is structured properly
+            'totalPendingTasks' => $totalPendingTasks,
+            'myPendingTasks' => $myPendingTasks,
+            'totalProgressTasks' => $totalProgressTasks,
+            'myProgressTasks' => $myProgressTasks,
+            'totalCompletedTasks' => $totalCompletedTasks,
+            'myCompletedTasks' => $myCompletedTasks,
+            'totalHighPriorityTasks' => $totalHighPriorityTasks,
+            'myHighPriorityTasks' => $myHighPriorityTasks,
+            'activeTasks' => $activeTasks,
+        ]);
+
+        // return inertia('Dashboard', compact(
+        //     'totalPendingTasks',
+        //     'myPendingTasks',
+        //     'totalProgressTasks',
+        //     'myProgressTasks',
+        //     'totalCompletedTasks',
+        //     'myCompletedTasks',
+        //     'totalHighPriorityTasks',
+        //     'myHighPriorityTasks',
+        //     'activeTasks',
+        // ));
     }
 }

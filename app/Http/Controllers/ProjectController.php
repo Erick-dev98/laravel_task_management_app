@@ -38,6 +38,9 @@ class ProjectController extends Controller
             "projects" => ProjectResource::collection($projects),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
@@ -46,6 +49,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        // Ensure the user is authorized to create projects
+        if (!Auth::user()->can('create-projects')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return inertia("Project/Create");
     }
 
@@ -92,6 +100,9 @@ class ProjectController extends Controller
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
@@ -100,6 +111,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        // Ensure the user is authorized to edit this project
+        if (!Auth::user()->can('edit-project', $project)) {
+            abort(403, 'Unauthorized action.');
+        }
         return inertia('Project/Edit', [
             'project' => new ProjectResource($project),
         ]);
