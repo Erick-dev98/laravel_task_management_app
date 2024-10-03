@@ -39,6 +39,9 @@ class UserController extends Controller
             "users" => UserCrudResource::collection($users),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
+            'auth' => [
+                'user' => auth()->user(), // Pass the authenticated user
+            ],
         ]);
     }
 
